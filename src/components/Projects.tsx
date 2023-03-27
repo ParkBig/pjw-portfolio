@@ -18,24 +18,6 @@ const Projects = ({prop} : {prop: ProjectContent}) => {
     setVisible((prev) => (prev === 0 ? 0 : prev - 1));
   };
 
-  const slider = {
-    initial: {
-      opacity: 0
-    },
-    visible: {
-      opacity: 1,
-      transition: { 
-        duration: 1 
-      } 
-    },
-    exit:  {
-      opacity: 0,
-      transition: { 
-        duration: 1
-      } 
-    }
-  }
-
   return (
     <Wrap>
       <UpperName>
@@ -61,7 +43,17 @@ const Projects = ({prop} : {prop: ProjectContent}) => {
       </UpperImg>
       <UpperDescription>
         <Description left={true}>
-          {prop.explain}
+          {prop.explain.split("*").map((prop, index) =>
+            index === 0 ? 
+              <ColorFont>
+                {prop} <br/><br/>
+              </ColorFont>
+              :
+              <>
+                {prop} <br/>
+              </>
+
+          )}
         </Description>
         <Description left={false}>
           <UpperContent>
@@ -229,7 +221,7 @@ const Description = styled.div<{ left: boolean }>`
   padding: ${prop => prop.left ? "0 10px 0 0" : "0 0 0 10px"};
   display: flex;
   justify-content: center;
-  align-items: center;
+  align-items: left;
   flex-direction: column;
   border-right: ${prop => prop.left ? "1px solid gray" : null};
   text-align: left;
@@ -263,3 +255,8 @@ const Content = styled.div`
     }
   }
 `;
+const ColorFont = styled.span`
+  color: tomato;
+  font-weight: bold;
+`;
+
